@@ -1,15 +1,206 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.1/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.1/addons/p5.sound.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <meta charset="utf-8" />
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Dia dos Namorados ❤️</title>
 
-  </head>
-  <body>
-    <main>
-    </main>
-    <script src="sketch.js"></script>
-  </body>
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#ff4d6d,#ff8fab,#ffc2d1);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    color:white;
+    overflow:hidden;
+}
+
+.card{
+    width:90%;
+    max-width:700px;
+    background:rgba(255,255,255,.15);
+    backdrop-filter:blur(10px);
+    border-radius:20px;
+    padding:35px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,.3);
+}
+
+h1{
+    font-size:42px;
+    margin-bottom:15px;
+}
+
+h2{
+    margin-bottom:20px;
+    font-weight:normal;
+}
+
+p{
+    font-size:18px;
+    margin-bottom:30px;
+}
+
+.timer{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+    gap:15px;
+}
+
+.box{
+    background:rgba(255,255,255,.2);
+    padding:20px;
+    border-radius:15px;
+}
+
+.box span{
+    display:block;
+    font-size:40px;
+    font-weight:bold;
+}
+
+.box small{
+    font-size:16px;
+}
+
+footer{
+    margin-top:35px;
+    font-size:18px;
+}
+
+.heart{
+    position:fixed;
+    color:#fff;
+    animation:fall linear infinite;
+}
+
+@keyframes fall{
+    from{
+        transform:translateY(-100px);
+    }
+    to{
+        transform:translateY(110vh);
+    }
+}
+</style>
+
+</head>
+<body>
+
+<div class="card">
+
+<h1>❤️ Feliz Dia dos Namorados ❤️</h1>
+
+<h2>Desde 03/11/2024</h2>
+
+<p>
+Cada segundo ao seu lado faz a minha vida mais feliz.
+Obrigado(a) por fazer parte da minha história.
+Eu te amo! 💖
+</p>
+
+<div class="timer">
+    <div class="box">
+        <span id="anos">0</span>
+        <small>Anos</small>
+    </div>
+
+    <div class="box">
+        <span id="meses">0</span>
+        <small>Meses</small>
+    </div>
+
+    <div class="box">
+        <span id="dias">0</span>
+        <small>Dias</small>
+    </div>
+
+    <div class="box">
+        <span id="horas">0</span>
+        <small>Horas</small>
+    </div>
+
+    <div class="box">
+        <span id="minutos">0</span>
+        <small>Minutos</small>
+    </div>
+
+    <div class="box">
+        <span id="segundos">0</span>
+        <small>Segundos</small>
+    </div>
+</div>
+
+<footer>
+💞 Nossa história continua sendo escrita todos os dias. 💞
+</footer>
+
+</div>
+
+<script>
+const inicio = new Date(2024,10,3,0,0,0); // 03/11/2024
+
+function atualizar(){
+
+    const agora = new Date();
+
+    let anos = agora.getFullYear() - inicio.getFullYear();
+    let meses = agora.getMonth() - inicio.getMonth();
+    let dias = agora.getDate() - inicio.getDate();
+
+    if(dias < 0){
+        meses--;
+        const ultimoMes = new Date(agora.getFullYear(), agora.getMonth(), 0);
+        dias += ultimoMes.getDate();
+    }
+
+    if(meses < 0){
+        anos--;
+        meses += 12;
+    }
+
+    const diff = agora - inicio;
+
+    const horas = Math.floor(diff / (1000*60*60)) % 24;
+    const minutos = Math.floor(diff / (1000*60)) % 60;
+    const segundos = Math.floor(diff / 1000) % 60;
+
+    document.getElementById("anos").textContent = anos;
+    document.getElementById("meses").textContent = meses;
+    document.getElementById("dias").textContent = dias;
+    document.getElementById("horas").textContent = horas;
+    document.getElementById("minutos").textContent = minutos;
+    document.getElementById("segundos").textContent = segundos;
+}
+
+setInterval(atualizar,1000);
+atualizar();
+
+// Corações caindo
+function criarCoracao(){
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.innerHTML="❤";
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(15+Math.random()*30)+"px";
+    heart.style.animationDuration=(4+Math.random()*5)+"s";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>{
+        heart.remove();
+    },9000);
+}
+
+setInterval(criarCoracao,300);
+</script>
+
+</body>
 </html>
